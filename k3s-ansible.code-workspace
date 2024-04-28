@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"terminal.integrated.cursorStyle": "line",
+		"editor.fontFamily": "'Cascadia Code', monospace",
+		"ansibleServer.trace.server": "messages",
+		"ansible.python.interpreterPath": "/workspaces/k3s-ansible/.venv/bin/python"
+	}
+}

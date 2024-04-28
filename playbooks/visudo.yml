@@ -1,0 +1,20 @@
+---
+# - name: Make users passwordless for sudo in group sudo - debian
+#   become: true
+#   lineinfile:
+#     path: /etc/sudoers
+#     state: present
+#     regexp: '^%sudo'
+#     line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+#     validate: 'visudo -cf %s'
+#   when: ansible_os_family == "Debian"
+
+# - name: Make users passwordless for sudo in group wheel - redhat
+#   become: true
+#   lineinfile:
+#     path: /etc/sudoers
+#     state: present
+#     regexp: '^%wheel'
+#     line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+#     validate: 'visudo -cf %s'
+#   when: ansible_os_family in [ "RedHat", "Suse" ]

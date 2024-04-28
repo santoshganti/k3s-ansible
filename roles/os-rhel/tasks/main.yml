@@ -1,0 +1,275 @@
+---
+####################################### Repos #######################################
+# Enable CRB sudo subscription-manager repos --enable 
+- name: Enable a RHSM repository - Code Ready
+  community.general.rhsm_repository:
+    name: codeready-builder-for-rhel-9-x86_64-rpms
+    state: enabled
+# rhel-9-for-x86_64-highavailability-rpms
+- name: Enable a RHSM repository - High Availability
+  community.general.rhsm_repository:
+    name: rhel-9-for-x86_64-highavailability-rpms
+    state: enabled
+# 
+- name: Enable a RHSM repository - Supplementary
+  community.general.rhsm_repository:
+    name: rhel-9-for-x86_64-supplementary-rpms
+    state: enabled
+#  rhel-9-for-x86_64-resilientstorage-rpms
+- name: Enable a RHSM repository - Resilient Storage
+  community.general.rhsm_repository:
+    name: rhel-9-for-x86_64-resilientstorage-rpms
+    state: enabled
+# codeready-builder-for-rhel-9-x86_64-eus-rpms
+- name: Enable a RHSM repository - High Availability Extended Updates
+  community.general.rhsm_repository:
+    name: codeready-builder-for-rhel-9-x86_64-eus-rpms
+    state: enabled
+#  kmm-2-for-rhel-9-x86_64-rpms
+- name: Enable a RHSM repository - Kernel Modules Management 2
+  community.general.rhsm_repository:
+    name: kmm-2-for-rhel-9-x86_64-rpms
+    state: enabled
+#  rhocp-4.16-for-rhel-9-x86_64-rpms
+- name: Enable a RHSM repository - Openshift Container Platform 4.16
+  community.general.rhsm_repository:
+    name: rhocp-4.16-for-rhel-9-x86_64-rpms
+    state: enabled
+# cert-manager-1.13-for-rhel-9-x86_64-rpms
+- name: Enable a RHSM repository - Cert Manager 1.13
+  community.general.rhsm_repository:
+    name: cert-manager-1.13-for-rhel-9-x86_64-rpms
+    state: enabled
+# rhdh-1-for-rhel-9-x86_64-rpms
+- name: Enable a RHSM repository - RedHat Developer Hub
+  community.general.rhsm_repository:
+    name: rhdh-1-for-rhel-9-x86_64-rpms
+    state: enabled
+#  rhel-9-for-x86_64-appstream-rpms
+- name: Enable a RHSM repository - Appstream
+  community.general.rhsm_repository:
+    name: rhel-9-for-x86_64-appstream-rpms
+    state: enabled
+# rhceph-5-tools-for-rhel-9-x86_64-rpms
+- name: Enable a RHSM repository - Ceph 5
+  community.general.rhsm_repository:
+    name: rhceph-5-tools-for-rhel-9-x86_64-rpms
+    state: enabled
+# lvms-4.14-for-rhel-9-x86_64-rpms
+- name: Enable a RHSM repository - LVM Management
+  community.general.rhsm_repository:
+    name: lvms-4.14-for-rhel-9-x86_64-rpms
+    state: enabled
+# gitops-1.12-for-rhel-9-x86_64-rpms
+- name: Enable a RHSM repository - GitOps 1.12
+  community.general.rhsm_repository:
+    name: gitops-1.12-for-rhel-9-x86_64-rpms
+    state: enabled
+# satellite-client-6-for-rhel-9-x86_64-rpms
+- name: Enable a RHSM repository - Statellite Client
+  community.general.rhsm_repository:
+    name: satellite-client-6-for-rhel-9-x86_64-rpms
+    state: enabled
+# Enable EPEL
+- name: Install EPEL
+  ansible.builtin.dnf:
+    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm"
+    state: latest
+# Enable RPM Fusion Free
+- name: Install rpmfusion-free-release
+  ansible.builtin.dnf:
+    name: "https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-9.noarch.rpm"
+    state: latest
+    disable_gpg_check: true
+# Enable RPM Non-Fusion Free
+- name: Install rpmfusion-nonfree-release
+  ansible.builtin.dnf:
+    name: "https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-9.noarch.rpm"
+    state: latest
+    disable_gpg_check: true
+# ####################################### Upgrade Packages #######################################
+- name: Upgrade all packages
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+# ####################################### Install Package Groups #######################################
+- name: Install the 'Server' package group
+  ansible.builtin.dnf:
+    name: '@Server'
+    state: latest
+- name: Install the 'Development tools' package group
+  ansible.builtin.dnf:
+    name: '@Development tools'
+    state: latest
+- name: Install the 'Headless Management' package group
+  ansible.builtin.dnf:
+    name: '@Headless Management'
+    state: latest
+- name: Install the 'Headless Management' package group
+  ansible.builtin.dnf:
+    name: '@System Tools'
+    state: latest
+- name: Install the 'Container Management' package group
+  ansible.builtin.dnf:
+    name: '@Container Management'
+    state: latest
+####################################### Enable Core Services #######################################
+- name: Enable cockpit
+  ansible.builtin.systemd:
+    name: cockpit.socket
+    enabled: true
+    state: started
+  become: true
+
+- name: Disable firewalld
+  ansible.builtin.systemd:
+    name: firewalld
+    enabled: false
+    state: stopped
+  become: true
+
+- name: Mask firewalld
+  ansible.builtin.systemd:
+    name: firewalld
+    masked: true
+  become: true
+####################################### Install Packages #######################################
+- name: Install the latest version of qemu-guest-agent
+  ansible.builtin.dnf:
+    name: qemu-guest-agent
+    state: latest
+- name: Install the latest version of nano
+  ansible.builtin.dnf:
+    name: nano
+    state: latest
+- name: Install the latest version of vim
+  ansible.builtin.dnf:
+    name: vim
+    state: latest
+- name: Install the latest version of neovim
+  ansible.builtin.dnf:
+    name: neovim
+    state: latest
+- name: Install the latest version of dnf-automatic
+  ansible.builtin.dnf:
+    name: dnf-automatic
+    state: latest
+- name: Install the latest version of tuned
+  ansible.builtin.dnf:
+    name: tuned
+    state: latest
+- name: Install the latest version of tuned-profiles-atomic
+  ansible.builtin.dnf:
+    name: tuned-profiles-atomic
+    state: latest
+- name: Install the latest version of tuned-profiles-cpu-partitioning
+  ansible.builtin.dnf:
+    name: tuned-profiles-cpu-partitioning
+    state: latest
+- name: Install the latest version of tuned-profiles-mssql
+  ansible.builtin.dnf:
+    name: tuned-profiles-mssql
+    state: latest
+- name: Install the latest version of tuned-utils
+  ansible.builtin.dnf:
+    name: tuned-utils
+    state: latest
+- name: Install the latest version of ksmtuned
+  ansible.builtin.dnf:
+    name: ksmtuned
+    state: latest
+- name: Install the latest version of curl
+  ansible.builtin.dnf:
+    name: curl
+    state: latest
+- name: Install the latest version of wget
+  ansible.builtin.dnf:
+    name: wget
+    state: latest
+- name: Install the latest version of libiscsi
+  ansible.builtin.dnf:
+    name: libiscsi
+    state: latest
+- name: Install the latest version of iscsi-initiator-utils
+  ansible.builtin.dnf:
+    name: iscsi-initiator-utils
+    state: latest
+- name: Install the latest version of iscsi-initiator-utils-iscsiuio
+  ansible.builtin.dnf:
+    name: iscsi-initiator-utils-iscsiuio
+    state: latest
+- name: Install the latest version of libblkid
+  ansible.builtin.dnf:
+    name: libblkid
+    state: latest
+- name: Install the latest version of libblkio
+  ansible.builtin.dnf:
+    name: libblkio
+    state: latest
+- name: Install the latest version of udisks2
+  ansible.builtin.dnf:
+    name: udisks2
+    state: latest
+- name: Install the latest version of udisks2-iscsi
+  ansible.builtin.dnf:
+    name: udisks2-iscsi
+    state: latest
+# kernel-devel-matched
+- name: Install the latest version of kernel-devel-matched
+  ansible.builtin.dnf:
+    name: kernel-devel-matched
+    state: latest
+# kernel-modules
+- name: Install the latest version of kernel-modules
+  ansible.builtin.dnf:
+    name: kernel-modules
+    state: latest
+# kernel-modules-extra
+- name: Install the latest version of kernel-modules-extra
+  ansible.builtin.dnf:
+    name: kernel-modules-extra
+    state: latest
+# cockpit-composer
+- name: Install the latest version of cockpit-composer
+  ansible.builtin.dnf:
+    name: cockpit-composer
+    state: latest
+# cockpit-doc
+- name: Install the latest version of cockpit-doc
+  ansible.builtin.dnf:
+    name: cockpit-doc
+    state: latest
+# cockpit-navigator
+- name: Install the latest version of cockpit-navigator
+  ansible.builtin.dnf:
+    name: cockpit-navigator
+    state: latest
+# cockpit-ostree
+- name: Install the latest version of cockpit-ostree
+  ansible.builtin.dnf:
+    name: cockpit-ostree
+    state: latest
+# cockpit-pcp
+- name: Install the latest version of cockpit-pcp
+  ansible.builtin.dnf:
+    name: cockpit-pcp
+    state: latest
+# cockpit-session-recording
+- name: Install the latest version of cockpit-session-recording
+  ansible.builtin.dnf:
+    name: cockpit-session-recording
+    state: latest
+# cockpit-storaged
+- name: Install the latest version of cockpit-storaged
+  ansible.builtin.dnf:
+    name: cockpit-storaged
+    state: latest
+# cockpit-podman
+- name: Install the latest version of cockpit-podman
+  ansible.builtin.dnf:
+    name: cockpit-composer
+    state: latest
+- name: Install the latest version of htop
+  ansible.builtin.dnf:
+    name: htop
+    state: latest

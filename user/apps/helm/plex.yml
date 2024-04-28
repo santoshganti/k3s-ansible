@@ -1,0 +1,78 @@
+additionalPorts: []
+additionalServicePorts: []
+affinity: {}
+dnsConfig: {}
+dnsPolicy: ClusterFirst
+env: {
+  PLEX_CLAIM: "claim-BsCMQry89xMU2eDxKqSs"
+}
+extraVolumeMounts: {}
+extraVolumes: []
+fullnameOverride: ""
+hostNetwork: false
+hostPort:
+  enabled: false
+  port: 32400
+image:
+  pullPolicy: IfNotPresent
+  repository: docker.io/linuxserver/plex
+  tag: ""
+imagePullSecrets: []
+ingress:
+  annotations: {}
+  className: ""
+  enabled: false
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+initContainers: []
+livenessProbe: {}
+nameOverride: ""
+nodeSelector: { kubernetes.io/hostname: "kubeworkergpu1.homelab.santoshganti.net" }
+persistence:
+  config:
+    accessModes:
+      - ReadWriteOnce
+    annotations: {}
+    customVolume: {}
+    enabled: true
+    existingClaim: ''
+    isPvc: true
+    size: 40Gi
+    storageClass: 'longhorn'
+  data:
+    accessModes:
+      - ReadWriteMany
+    annotations: {}
+    customVolume: {}
+    enabled: true
+    existingClaim: ""
+    isPvc: false
+    size: 64Gi
+    storageClass: ""
+    hostPath:
+      path: /mnt/truenas/media
+podAnnotations: {}
+podSecurityContext: {}
+readinessProbe:
+  tcpSocket:
+    port: plex
+replicaCount: 1
+resources: {}
+secretEnv: {}
+securityContext: {}
+service:
+  loadBalancerIP: "10.0.3.100"
+  port: 32400
+  type: LoadBalancer
+serviceAccount:
+  annotations: {}
+  create: true
+  name: ""
+sidecarContainers: []
+strategy:
+  type: Recreate
+tolerations: []

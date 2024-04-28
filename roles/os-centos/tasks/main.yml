@@ -1,0 +1,169 @@
+---
+- name: Enable cockpit
+  ansible.builtin.systemd:
+    name: cockpit.socket
+    enabled: true
+    state: started
+  become: true
+
+- name: Ensure the crb repository is enabled
+  community.general.dnf_config_manager:
+    name: crb
+    state: enabled
+
+- name: Install the latest version of epel-release
+  ansible.builtin.dnf:
+    name: epel-release
+    state: latest
+
+- name: Install the latest version of epel-next-release
+  ansible.builtin.dnf:
+    name: epel-next-release
+    state: latest
+
+- name: Import a key from elrepo-kernel url
+  ansible.builtin.rpm_key:
+    state: present
+    key: https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+
+- name: Install elrepo-kernel
+  ansible.builtin.dnf:
+    name: "https://www.elrepo.org/elrepo-release-9.el9.elrepo.noarch.rpm"
+    state: latest
+
+- name: Enable New Kernel Repo
+  community.general.dnf_config_manager:
+    name: elrepo-kernel
+    state: enabled
+
+- name: Upgrade all packages
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+
+- name: Install the latest version of qemu-guest-agent
+  ansible.builtin.dnf:
+    name: qemu-guest-agent
+    state: latest
+
+- name: Install the latest version of bash-completion
+  ansible.builtin.dnf:
+    name: bash-completion
+    state: latest
+
+- name: Install the latest version of nano
+  ansible.builtin.dnf:
+    name: nano
+    state: latest
+
+- name: Install the latest version of vim
+  ansible.builtin.dnf:
+    name: vim
+    state: latest
+
+- name: Install the latest version of neovim
+  ansible.builtin.dnf:
+    name: neovim
+    state: latest
+
+- name: Install the latest version of dnf-automatic
+  ansible.builtin.dnf:
+    name: dnf-automatic
+    state: latest
+
+- name: Install the latest version of tuned
+  ansible.builtin.dnf:
+    name: tuned
+    state: latest
+
+- name: Install the latest version of curl
+  ansible.builtin.dnf:
+    name: curl
+    state: latest
+
+- name: Install the latest version of wget
+  ansible.builtin.dnf:
+    name: wget
+    state: latest
+
+- name: Install the latest version of libiscsi
+  ansible.builtin.dnf:
+    name: libiscsi
+    state: latest
+
+- name: Install the latest version of iscsi-initiator-utils
+  ansible.builtin.dnf:
+    name: iscsi-initiator-utils
+    state: latest
+
+- name: Install the latest version of iscsi-initiator-utils-iscsiuio
+  ansible.builtin.dnf:
+    name: iscsi-initiator-utils-iscsiuio
+    state: latest
+
+- name: Install the latest version of libblkid
+  ansible.builtin.dnf:
+    name: libblkid
+    state: latest
+
+- name: Install the latest version of libblkio
+  ansible.builtin.dnf:
+    name: libblkio
+    state: latest
+
+- name: Install the latest version of udisks2
+  ansible.builtin.dnf:
+    name: udisks2
+    state: latest
+
+- name: Install the latest version of udisks2-iscsi
+  ansible.builtin.dnf:
+    name: udisks2-iscsi
+    state: latest
+
+- name: Install the latest version of kernel-ml
+  ansible.builtin.dnf:
+    name: kernel-ml
+    state: latest
+
+- name: Install the latest version of kernel-ml
+  ansible.builtin.dnf:
+    name: kernel-ml-devel
+    state: latest
+
+- name: Install the latest version of console-login-helper-messages
+  ansible.builtin.dnf:
+    name: console-login-helper-messages
+    state: latest
+
+- name: Install the latest version of console-login-helper-messages-motdgen
+  ansible.builtin.dnf:
+    name: console-login-helper-messages-motdgen
+    state: latest
+
+- name: Install the 'Development tools' package group
+  ansible.builtin.dnf:
+    name: '@Development tools'
+    state: latest
+
+- name: Install the 'Headless Management' package group
+  ansible.builtin.dnf:
+    name: '@Headless Management'
+    state: latest
+
+- name: Install the 'Container Management' package group
+  ansible.builtin.dnf:
+    name: '@Container Management'
+    state: latest
+
+- name: Install the 'Server' package group
+  ansible.builtin.dnf:
+    name: '@Server'
+    state: latest
+
+# - name: Ensure the appstream and zfs repositories are disabled
+#   community.general.dnf_config_manager:
+#     name:
+#       - appstream
+#       - zfs
+#     state: disabled

@@ -1,0 +1,21 @@
+---
+- name: Restart RHEL Machines
+  hosts: vms
+  gather_facts: true
+  environment: "{{ proxy_env | default({}) }}"
+  roles:
+    # - role: os-centos
+    #   become: true
+    #   when: ansible_distribution | lower == "centos"
+    # - role: os-debian
+    #   become: true
+    #   when: ansible_distribution | lower == "debian"
+    # - role: os-fedora-steam
+    #   become: true
+    #   when: ansible_distribution | lower == "fedora"
+    # - role: os-rhel
+    #   become: true
+    #   when: ansible_distribution | lower == "redhat"
+    - role: os-ubuntu
+      become: true
+      when: ansible_distribution | lower == "ubuntu"

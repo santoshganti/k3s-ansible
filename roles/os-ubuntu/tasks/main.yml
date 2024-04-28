@@ -1,0 +1,255 @@
+---
+- name: Install software-properties-common
+  become: true
+  ansible.builtin.apt:
+    name: software-properties-common
+    state: present
+    update_cache: true
+  when: ansible_distribution|lower == "ubuntu"
+- name: Run the equivalent of "apt-get update" as a separate step
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+  when: ansible_distribution|lower == "ubuntu"
+# free-form (string) arguments, all arguments on one line
+- name: Apt hold network-manager, cockpit-networkmanager, podman
+  ansible.builtin.command: apt-mark hold network-manager cockpit-networkmanager cockpit-podman firewalld ufw podman
+  become: true
+  when: ansible_distribution|lower == "ubuntu"
+- name: Update all packages to their latest version
+  become: true
+  ansible.builtin.apt:
+    name: "*"
+    state: latest
+    update_cache: true
+    autoremove: true
+  when: ansible_distribution|lower == "ubuntu"
+- name: Install qemu-guest-agent
+  become: true
+  ansible.builtin.apt:
+    name: qemu-guest-agent
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+- name: Install spice-vdagent
+  become: true
+  ansible.builtin.apt:
+    name: spice-vdagent
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+- name: Install build-essential
+  become: true
+  ansible.builtin.apt:
+    name: build-essential
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+# vim
+- name: Install vim
+  become: true
+  ansible.builtin.apt:
+    name: vim
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+# nano
+- name: Install nano
+  become: true
+  ansible.builtin.apt:
+    name: nano
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+# python3-full
+- name: Install python3-full
+  become: true
+  ansible.builtin.apt:
+    name: python3-full
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+# virtualenv
+- name: Install virtualenv
+  become: true
+  ansible.builtin.apt:
+    name: virtualenv
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+# curl
+- name: Install curl
+  become: true
+  ansible.builtin.apt:
+    name: curl
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+# wget
+- name: Install wget
+  become: true
+  ansible.builtin.apt:
+    name: wget
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+# git
+- name: Install git
+  become: true
+  ansible.builtin.apt:
+    name: git
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+# net-tools
+- name: Install net-tools
+  become: true
+  ansible.builtin.apt:
+    name: net-tools
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+# htop
+- name: Install htop
+  become: true
+  ansible.builtin.apt:
+    name: htop
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+# unzip
+- name: Install unzip
+  become: true
+  ansible.builtin.apt:
+    name: unzip
+    state: present
+  when: ansible_distribution|lower == "ubuntu"
+# xz-utils
+- name: Install xz-utils
+  become: true
+  ansible.builtin.apt:
+    name: xz-utils
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+  # xz-utils
+- name: Install open-iscsi
+  become: true
+  ansible.builtin.apt:
+    name: open-iscsi
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+# cifs-utils
+- name: Install cifs-utils
+  become: true
+  ansible.builtin.apt:
+    name: cifs-utils
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+# bash-completion
+- name: Install bash-completion
+  become: true
+  ansible.builtin.apt:
+    name: bash-completion
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+
+# gnupg2
+- name: Install gnupg2
+  become: true
+  ansible.builtin.apt:
+    name: gnupg2
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+
+# pass
+- name: Install pass
+  become: true
+  ansible.builtin.apt:
+    name: pass
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+
+# rsync
+- name: Install rsync
+  become: true
+  ansible.builtin.apt:
+    name: rsync
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+
+# unattended-upgrades
+- name: Install unattended-upgrades
+  become: true
+  ansible.builtin.apt:
+    name: unattended-upgrades
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+
+# nfs-common
+- name: Install nfs-common
+  become: true
+  ansible.builtin.apt:
+    name: nfs-common
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+
+# nfs4-acl-tools
+- name: Install nfs4-acl-tools
+  become: true
+  ansible.builtin.apt:
+    name: nfs4-acl-tools
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+
+# ca-certificates
+- name: Install ca-certificates
+  become: true
+  ansible.builtin.apt:
+    name: ca-certificates
+    state: latest
+  when: ansible_distribution|lower == "ubuntu"
+
+# clang
+# - name: Install clang
+#   become: true
+#   ansible.builtin.apt:
+#     name: clang
+#     state: present
+#   when: ansible_distribution|lower == "ubuntu"
+
+- name: Install Cockpit
+  become: true
+  ansible.builtin.apt:
+    name: cockpit
+    state: latest
+    # default_release: jammy-backports
+    update_cache: true
+  when: ansible_distribution|lower == "ubuntu"
+
+- name: Enable cockpit
+  ansible.builtin.systemd:
+    name: cockpit.socket
+    enabled: true
+    state: started
+  become: true
+  when: ansible_distribution|lower == "ubuntu"
+
+# - name: Disable systemd-networkd-wait-online
+#   ansible.builtin.systemd:
+#     name: systemd-networkd-wait-online
+#     masked: true
+#   become: true
+#   when: ansible_distribution|lower == "ubuntu"
+
+# - name: Install linux-image-6.5.0-28-generic
+#   become: true
+#   ansible.builtin.apt:
+#     name: linux-image-6.5.0-28-generic
+#     state: present
+#     # default_release: jammy-backports
+#     update_cache: true
+#   when: ansible_distribution|lower == "ubuntu"
+
+# - name: Install linux-headers-6.5.0-28-generic
+#   become: true
+#   ansible.builtin.apt:
+#     name: linux-headers-6.5.0-28-generic
+#     state: present
+#     # default_release: jammy-backports
+#     update_cache: true
+#     autoremove: true
+#   when: ansible_distribution|lower == "ubuntu"
+
+# - name: Update Grub
+#   ansible.builtin.command: update-grub
+#   become: true
+#   when: ansible_distribution|lower == "ubuntu"
+

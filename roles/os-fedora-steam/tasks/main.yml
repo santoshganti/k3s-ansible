@@ -1,0 +1,193 @@
+---
+- name: Install rpmfusion-free-release
+  ansible.builtin.dnf:
+    name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
+    state: latest
+
+- name: Install rpmfusion-nonfree-release
+  ansible.builtin.dnf:
+    name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
+    state: latest
+
+# Enable Docker Repo
+- name: Enable Docker Repo
+  community.general.dnf_config_manager:
+    name: "https://download.docker.com/linux/fedora/docker-ce.repo"
+    state: enabled
+
+# Enable Razer Repo
+- name: Enable New Razer Repo
+  community.general.dnf_config_manager:
+    name: "https://download.opensuse.org/repositories/hardware:razer/Fedora_$(rpm -E %fedora)/hardware:razer.repo"
+    state: enabled
+
+# Enable Google Chrome
+- name: Enable google-chrome
+  community.general.dnf_config_manager:
+    name: google-chrome
+    state: enabled
+
+# Disable rpmfusion-nonfree-nvidia-driver
+- name: Disable rpmfusion-nonfree-nvidia-driver
+  community.general.dnf_config_manager:
+    name: rpmfusion-nonfree-nvidia-driver
+    state: disabled
+
+# Disable rpmfusion-nonfree-steam
+- name: Disable rpmfusion-nonfree-steam
+  community.general.dnf_config_manager:
+    name: rpmfusion-nonfree-steam
+    state: disabled
+
+# Enable Fedy
+- name: Enable kwizart/fedy
+  community.general.dnf_config_manager:
+    name: kwizart/fedy
+    state: enabled
+
+# Microsoft Repos Keys
+- name: Import a key from microsoft repo url
+  ansible.builtin.rpm_key:
+    state: present
+    key: https://packages.microsoft.com/keys/microsoft.asc
+
+# Edge
+- name: Enable Edge Repo
+  ansible.builtin.dnf:
+    name: "https://packages.microsoft.com/yumrepos/edge"
+    state: latest
+
+# Vscode
+- name: Enable Vscode Repo
+  ansible.builtin.dnf:
+    name: "https://packages.microsoft.com/yumrepos/vscode"
+    state: latest
+
+# 1Password
+- name: Import a key from 1Password repo url
+  ansible.builtin.rpm_key:
+    state: present
+    key: https://downloads.1password.com/linux/keys/1password.asc
+
+- name: Enable 1Password Repo
+  ansible.builtin.dnf:
+    name: "https://downloads.1password.com/linux/rpm/stable/$basearch"
+    state: latest
+
+# Upgrade Packages
+- name: Upgrade all packages
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+
+- name: Install the latest version of qemu-guest-agent
+  ansible.builtin.dnf:
+    name: qemu-guest-agent
+    state: latest
+
+- name: Install the latest version of bash-completion
+  ansible.builtin.dnf:
+    name: bash-completion
+    state: latest
+
+- name: Install the latest version of nano
+  ansible.builtin.dnf:
+    name: nano
+    state: latest
+
+- name: Install the latest version of vim
+  ansible.builtin.dnf:
+    name: vim
+    state: latest
+
+- name: Install the latest version of neovim
+  ansible.builtin.dnf:
+    name: neovim
+    state: latest
+
+- name: Install the latest version of dnf-automatic
+  ansible.builtin.dnf:
+    name: dnf-automatic
+    state: latest
+
+- name: Install the latest version of tuned
+  ansible.builtin.dnf:
+    name: tuned
+    state: latest
+
+- name: Install the latest version of curl
+  ansible.builtin.dnf:
+    name: curl
+    state: latest
+
+- name: Install the latest version of wget
+  ansible.builtin.dnf:
+    name: wget
+    state: latest
+
+- name: Install the latest version of libiscsi
+  ansible.builtin.dnf:
+    name: libiscsi
+    state: latest
+
+- name: Install the latest version of iscsi-initiator-utils
+  ansible.builtin.dnf:
+    name: iscsi-initiator-utils
+    state: latest
+
+- name: Install the latest version of iscsi-initiator-utils-iscsiuio
+  ansible.builtin.dnf:
+    name: iscsi-initiator-utils-iscsiuio
+    state: latest
+
+- name: Install the latest version of libblkid
+  ansible.builtin.dnf:
+    name: libblkid
+    state: latest
+
+- name: Install the latest version of libblkio
+  ansible.builtin.dnf:
+    name: libblkio
+    state: latest
+
+- name: Install the latest version of udisks2
+  ansible.builtin.dnf:
+    name: udisks2
+    state: latest
+
+- name: Install the latest version of udisks2-iscsi
+  ansible.builtin.dnf:
+    name: udisks2-iscsi
+    state: latest
+
+- name: Install the latest version of kernel-ml
+  ansible.builtin.dnf:
+    name: kernel-ml
+    state: latest
+
+- name: Install the 'Development tools' package group
+  ansible.builtin.dnf:
+    name: '@Development tools'
+    state: latest
+
+- name: Install the 'Headless Management' package group
+  ansible.builtin.dnf:
+    name: '@Headless Management'
+    state: latest
+
+- name: Install the 'Container Management' package group
+  ansible.builtin.dnf:
+    name: '@Container Management'
+    state: latest
+
+- name: Install the 'Server' package group
+  ansible.builtin.dnf:
+    name: '@Server'
+    state: latest
+
+- name: Enable cockpit
+  ansible.builtin.systemd:
+    name: cockpit.socket
+    enabled: true
+    state: started
+  become: true
