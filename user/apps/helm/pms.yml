@@ -1,0 +1,67 @@
+affinity: {}
+commonLabels: {}
+extraContainers: []
+extraEnv: {
+  PLEX_CLAIM: "claim-BsCMQry89xMU2eDxKqSs"
+}
+extraVolumeMounts: []
+extraVolumes: []
+fullnameOverride: ''
+global:
+  imageRegistry: ''
+image:
+  pullPolicy: IfNotPresent
+  registry: index.docker.io
+  repository: plexinc/pms-docker
+  sha: ''
+  tag: latest
+imagePullSecrets: []
+ingress:
+  annotations: {}
+  enabled: false
+  ingressClassName: ingress-nginx
+  url: ''
+initContainer:
+  image:
+    pullPolicy: IfNotPresent
+    registry: index.docker.io
+    repository: alpine
+    sha: ''
+    tag: 3.18.0
+  script: ''
+nameOverride: ''
+nodeSelector: { }
+pms:
+  configExistingClaim: 'plex-ashborn'
+  configStorage: 40Gi
+  resources: {}
+  storageClassName: longhorn
+  enabled: true
+priorityClassName: ''
+rclone:
+  additionalArgs: []
+  configSecret: 'plexrclone'
+  enabled: true
+  image:
+    pullPolicy: IfNotPresent
+    registry: index.docker.io
+    repository: rclone/rclone
+    sha: ''
+    tag: 1.62.2
+  readOnly: true
+  remotes: ['truenasy']
+  resources: {}
+service:
+  annotations: {}
+  port: 32400
+  type: LoadBalancer
+  loadBalancerIP: '10.0.3.100'
+serviceAccount:
+  annotations: {}
+  automountServiceAccountToken: false
+  create: true
+  name: ''
+statefulSet:
+  annotations: {}
+  podAnnotations: {}
+tolerations: []

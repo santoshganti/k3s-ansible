@@ -1,0 +1,414 @@
+---
+- name: Install software-properties-common
+  become: true
+  ansible.builtin.apt:
+    name: software-properties-common
+    state: present
+    update_cache: true
+  when: ansible_distribution|lower == "debian"
+
+# bookworm
+- name: Add bookworm main repository
+  ansible.builtin.apt_repository:
+    repo: "deb http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware"
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# bookworm-updates
+- name: Add bookworm updates repository
+  ansible.builtin.apt_repository:
+    repo: "deb http://deb.debian.org/debian/ bookworm-updates main contrib non-free non-free-firmware"
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# bookworm-backports
+- name: Add bookworm backports repository
+  ansible.builtin.apt_repository:
+    repo: "deb http://deb.debian.org/debian/ bookworm-backports main contrib non-free non-free-firmware"
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# bookworm-security
+- name: Add bookworm security repository
+  ansible.builtin.apt_repository:
+    repo: "deb http://deb.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware"
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+  when: ansible_distribution|lower == "debian"
+
+# free-form (string) arguments, all arguments on one line
+- name: Apt hold network-manager, cockpit-networkmanager, podman
+  ansible.builtin.command: apt-mark hold network-manager cockpit-networkmanager cockpit-podman firewalld ufw podman
+  become: true
+  when: ansible_distribution|lower == "debian"
+
+- name: Update all packages to their latest version
+  become: true
+  ansible.builtin.apt:
+    name: "*"
+    state: latest
+    update_cache: true
+  when: ansible_distribution|lower == "debian"
+
+- name: Install qemu-guest-agent
+  become: true
+  ansible.builtin.apt:
+    name: qemu-guest-agent
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+- name: Install build-essential
+  become: true
+  ansible.builtin.apt:
+    name: build-essential
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# vim
+- name: Install vim
+  become: true
+  ansible.builtin.apt:
+    name: vim
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# nano
+- name: Install nano
+  become: true
+  ansible.builtin.apt:
+    name: nano
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# python3-full
+- name: Install python3-full
+  become: true
+  ansible.builtin.apt:
+    name: python3-full
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# # virtualenv
+- name: Install virtualenv
+  become: true
+  ansible.builtin.apt:
+    name: virtualenv
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# linux-image-6.6.13+bpo-cloud-amd64
+- name: Install linux-image-6.6.13+bpo-cloud-amd64
+  become: true
+  ansible.builtin.apt:
+    name: linux-image-6.6.13+bpo-cloud-amd64
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# linux-headers-6.6.13+bpo-cloud-amd64
+- name: Install linux-headers-6.6.13+bpo-cloud-amd64
+  become: true
+  ansible.builtin.apt:
+    name: linux-headers-6.6.13+bpo-cloud-amd64
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# linux-image-6.6.13+bpo-cloud-amd64-dbg
+- name: Insta linux-image-6.6.13+bpo-cloud-amd64-dbg
+  become: true
+  ansible.builtin.apt:
+    name: linux-image-6.6.13+bpo-cloud-amd64-dbg
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# curl
+- name: Install curl
+  become: true
+  ansible.builtin.apt:
+    name: curl
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# wget
+- name: Install wget
+  become: true
+  ansible.builtin.apt:
+    name: wget
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# git
+- name: Install git
+  become: true
+  ansible.builtin.apt:
+    name: git
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# net-tools
+- name: Install net-tools
+  become: true
+  ansible.builtin.apt:
+    name: net-tools
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# htop
+- name: Install htop
+  become: true
+  ansible.builtin.apt:
+    name: htop
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# unzip
+- name: Install unzip
+  become: true
+  ansible.builtin.apt:
+    name: unzip
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# xz-utils
+- name: Install xz-utils
+  become: true
+  ansible.builtin.apt:
+    name: xz-utils
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# default-jdk
+# - name: Install default-jdk
+#   become: true
+#   ansible.builtin.apt:
+#     name: default-jdk
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# cifs-utils
+- name: Install cifs-utils
+  become: true
+  ansible.builtin.apt:
+    name: cifs-utils
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# bash-completion
+- name: Install bash-completion
+  become: true
+  ansible.builtin.apt:
+    name: bash-completion
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# gnupg2
+- name: Install gnupg2
+  become: true
+  ansible.builtin.apt:
+    name: gnupg2
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# pass
+- name: Install pass
+  become: true
+  ansible.builtin.apt:
+    name: pass
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# rsync
+- name: Install rsync
+  become: true
+  ansible.builtin.apt:
+    name: rsync
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# dkms
+# - name: Install dkms
+#   become: true
+#   ansible.builtin.apt:
+#     name: dkms
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# arch-install-scripts
+# - name: Install arch-install-scripts
+#   become: true
+#   ansible.builtin.apt:
+#     name: arch-install-scripts
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# unattended-upgrades
+- name: Install unattended-upgrades
+  become: true
+  ansible.builtin.apt:
+    name: unattended-upgrades
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# nfs-common
+- name: Install nfs-common
+  become: true
+  ansible.builtin.apt:
+    name: nfs-common
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# nfs4-acl-tools
+- name: Install nfs4-acl-tools
+  become: true
+  ansible.builtin.apt:
+    name: nfs4-acl-tools
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# ca-certificates
+- name: Install ca-certificates
+  become: true
+  ansible.builtin.apt:
+    name: ca-certificates
+    state: present
+  when: ansible_distribution|lower == "debian"
+
+# clang
+# - name: Install clang
+#   become: true
+#   ansible.builtin.apt:
+#     name: clang
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# cmake
+# - name: Install cmake
+#   become: true
+#   ansible.builtin.apt:
+#     name: cmake
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# auditd
+# - name: Install auditd
+#   become: true
+#   ansible.builtin.apt:
+#     name: auditd
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# apparmor
+# - name: Install apparmor
+#   become: true
+#   ansible.builtin.apt:
+#     name: apparmor
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# apparmor-notify
+# - name: Install apparmor-notify
+#   become: true
+#   ansible.builtin.apt:
+#     name: apparmor-notify
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# apparmor-profiles
+# - name: Install apparmor-profiles
+#   become: true
+#   ansible.builtin.apt:
+#     name: apparmor-profiles
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# apparmor-profiles-extra
+# - name: Install apparmor-profiles-extra
+#   become: true
+#   ansible.builtin.apt:
+#     name: apparmor-profiles-extra
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# apparmor-utils
+# - name: Install apparmor-utils
+#   become: true
+#   ansible.builtin.apt:
+#     name: apparmor-utils
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# dh-apparmor
+# - name: Install dh-apparmor
+#   become: true
+#   ansible.builtin.apt:
+#     name: dh-apparmor
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# uwsgi-plugin-apparmor
+# - name: Install uwsgi-plugin-apparmor
+#   become: true
+#   ansible.builtin.apt:
+#     name: uwsgi-plugin-apparmor
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# firmware-linux
+# - name: Install firmware-linux
+#   become: true
+#   ansible.builtin.apt:
+#     name: firmware-linux
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# firmware-linux-free
+# - name: Install firmware-linux-free
+#   become: true
+#   ansible.builtin.apt:
+#     name: firmware-linux-free
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# firmware-linux-nonfree
+# - name: Install firmware-linux-nonfree
+#   become: true
+#   ansible.builtin.apt:
+#     name: firmware-linux-nonfree
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+# wireless-regdb
+# - name: Install wireless-regdb
+#   become: true
+#   ansible.builtin.apt:
+#     name: wireless-regdb
+#     state: present
+#   when: ansible_distribution|lower == "debian"
+
+- name: Install Cockpit
+  become: true
+  ansible.builtin.apt:
+    name: cockpit
+    state: present
+    default_release: bookworm-backports
+    update_cache: true
+  when: ansible_distribution|lower == "debian"
+
+- name: Enable cockpit
+  ansible.builtin.systemd:
+    name: cockpit.socket
+    enabled: true
+    state: started
+  become: true
+  when: ansible_distribution|lower == "debian"
+
+# - name: Enable cockpit
+#   ansible.builtin.systemd:
+#     name: systemd-networkd-wait-online
+#     masked: true
+#   become: true
+#   when: ansible_distribution|lower == "debian"

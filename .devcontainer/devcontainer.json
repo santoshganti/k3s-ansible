@@ -1,0 +1,46 @@
+{
+    "name": "ansible-dev-container-codespaces",
+    "image": "ghcr.io/ansible/community-ansible-dev-tools:latest",
+    "containerUser": "podman",
+    "runArgs": [
+        "--security-opt",
+        "seccomp=unconfined",
+        "--security-opt",
+        "label=disable",
+        "--cap-add=SYS_ADMIN",
+        "--cap-add=SYS_RESOURCE",
+        "--device",
+        "/dev/fuse",
+        "--security-opt",
+        "apparmor=unconfined",
+        "--hostname=ansible-dev-container"
+    ],
+    "updateRemoteUserUID": true,
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "redhat.ansible",
+                "redhat.vscode-xml",
+                "ms-python.python",
+                "ms-python.debugpy",
+                "ms-python.vscode-pylance",
+                "GEEKiDoS.vdf",
+                "ms-vscode.anycode-python",
+                "donjayamanne.python-environment-manager",
+                "VisualStudioExptTeam.vscodeintellicode",
+                "redhat.vscode-yaml"
+            ]
+        }
+    },
+    // "postStartCommand": "pip install pip-tools && pip-compile requirements.in && pip install -r requirements.txt && ansible-galaxy collection install -r ./collections/requirements.yml",
+    "postStartCommand": "sh /workspaces/k3s-ansible/init.sh",
+    "features": {
+        "ghcr.io/devcontainers-contrib/features/kubectl-asdf:2": {}
+    }
+    // "mounts": [
+    //     "type=bind,source=${localWorkspaceFolder},target=/work",
+    //     "type=bind,source=/home/sganti/.ssh,target=/home/podman/.ssh,readonly",
+    //     "type=bind,source=/home/sganti/.gnupg,target=/home/podman/.gnupg,readonly",
+    //     "type=bind,source=/home/sganti/.password-store,target=/home/podman/.password-store,readonly" 
+    //   ]
+}
